@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+		<bean id="bCWltAccessLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltAccessLogMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltaccesslogDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltAccessLogDao" >
+ 		<property name="mapper" ref="bCWltAccessLogMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltAssetMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltAssetMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltassetDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltAssetDao" >
+ 		<property name="mapper" ref="bCWltAssetMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltFileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltFileMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltfileDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltFileDao" >
+ 		<property name="mapper" ref="bCWltFileMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltFundMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltFundMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltfundDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltFundDao" >
+ 		<property name="mapper" ref="bCWltFundMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltLedgerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltLedgerMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltledgerDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltLedgerDao" >
+ 		<property name="mapper" ref="bCWltLedgerMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltTransactionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltTransactionMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwlttransactionDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltTransactionDao" >
+ 		<property name="mapper" ref="bCWltTransactionMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltUserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltuserDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltUserDao" >
+ 		<property name="mapper" ref="bCWltUserMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltUserAddressMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltUserAddressMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltuseraddressDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltUserAddressDao" >
+ 		<property name="mapper" ref="bCWltUserAddressMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltUserLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltUserLogMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltuserlogDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltUserLogDao" >
+ 		<property name="mapper" ref="bCWltUserLogMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	<bean id="bCWltWalletMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.fc.bc.ordbgens.wlt.mapper.BCWltWalletMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	 <bean id="bcwltwalletDao" class="org.fc.bc.ordbgens.wlt.dao.BCWltWalletDao" >
+ 		<property name="mapper" ref="bCWltWalletMapper" />
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+ 	</bean>
+	
+</beans>

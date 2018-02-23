@@ -1,0 +1,196 @@
+
+syntax = "proto3";
+
+package org.fc.bc.ordbgens.wlt.pbo;
+
+message PBBCWltAccessLog
+{
+	string access_log_id = 1;
+	string order_no = 2;
+	string user_id = 3;
+	string pb_action = 4;
+	string req_str = 5;
+	string res_str = 6;
+	string ret_code = 7;
+	string ret_msg = 8;
+	int64 insert_time = 9;
+	int64 req_time = 10;
+	int64 proxy_time = 11;
+	int64 res_time = 12;
+	string user_cookies = 13;
+	string user_ip = 14;
+	string platform = 15;
+	string client_osver = 16;
+	double cost_ms = 17;
+	string reserved1 = 18;
+	string reserved2 = 19;
+}
+
+message PBBCWltAsset
+{
+	string asset_id = 1;
+	string user_id = 2;
+	string txid = 3;
+	string address = 4;
+	string type = 5;
+	string alias = 6;
+	string data_table = 7;
+	string file_path = 8;
+	string metadata = 9;
+	string key_id = 10;
+	double amount = 11;
+	double count = 12;
+	double total_fee = 13;
+	double net_fee = 14;
+	double discount = 15;
+	double fbc_count = 16;
+	double colored_btc = 17;
+	double colored_eth = 18;
+	double colored_xrp = 19;
+	string status = 20;
+	int64 created_time = 21;
+	int64 updated_time = 22;
+	string reserved1 = 23;
+	string reserved2 = 24;
+}
+
+message PBBCWltFile
+{
+	string file_id = 1;
+	string file_path = 2;
+	int64 file_size = 3;
+	int64 upload_time = 4;
+	string user_id = 5;
+	string file_name = 6;
+}
+
+message PBBCWltFund
+{
+	string fund_id = 1;
+	string asset_id = 2;
+	double amount = 3;
+	int32 count = 4;
+	double total_fee = 5;
+	double net_fee = 6;
+	double discount = 7;
+	string uni_code = 8;
+	string alias = 9;
+	string genis_address = 10;
+	string genis_org = 11;
+	int32 fbc_count = 12;
+	string dmt = 13;
+	double colored_btc = 14;
+	double colored_eth = 15;
+	double colored_xrp = 16;
+}
+
+message PBBCWltLedger
+{
+	string ledger_id = 1;
+	string user_id = 2;
+	string ledger_ip = 3;
+	string storage_ip = 4;
+	string idc = 5;
+	string status = 6;
+	int64 created_time = 7;
+	int64 updated_time = 8;
+	string reserved1 = 9;
+	string reserved2 = 10;
+}
+
+message PBBCWltTransaction
+{
+	string trans_id = 1;
+	string old_asset_id = 2;
+	string from_user_id = 3;
+	string from_user_name = 4;
+	string to_user_id = 5;
+	string to_user_name = 6;
+	double amount = 7;
+	double count = 8;
+	string tran_user_id = 9;
+	string newtxid = 10;
+	string transaction_type = 11;
+	string newassetid = 12;
+	string status = 13;
+	int64 create_time = 14;
+	int64 end_time = 15;
+	string result_code = 16;
+	string result_desc = 17;
+	double total_fee = 18;
+	double net_fee = 19;
+	string reserved1 = 20;
+	string reserved2 = 21;
+}
+
+message PBBCWltUser
+{
+	string user_id = 1;
+	string user_name = 2;
+	string passwd = 3;
+	string id_card = 4;
+	string certification_tel = 5;
+	string email = 6;
+	string org = 7;
+	string tel = 8;
+	string is_creator = 9;
+	string status = 10;
+	int64 created_time = 11;
+	int64 updated_time = 12;
+	string reserved1 = 13;
+	string reserved2 = 14;
+}
+
+message PBBCWltUserAddress
+{
+	string key_id = 1;
+	string user_id = 2;
+	string hex_addr = 3;
+	string alias = 4;
+	string pki = 5;
+	string pub = 6;
+	string rpmb_hash = 7;
+	int64 created_time = 8;
+	int64 updated_time = 9;
+	string default_addr = 10;
+	string reserved1 = 11;
+	string reserved2 = 12;
+}
+
+message PBBCWltUserLog
+{
+	string log_id = 1;
+	string user_id = 2;
+	string login_name = 3;
+	int64 login_time = 4;
+	string client_ip = 5;
+	string server_ip = 6;
+	string session_id = 7;
+	int64 logout_time = 8;
+	string resource_id = 9;
+	string ban_forbidden = 10;
+	string remark = 11;
+	string pps = 12;
+	string status = 13;
+	int64 created_time = 14;
+	string created_by = 15;
+	int64 modified_time = 16;
+	string modified_by = 17;
+	string reserved1 = 18;
+	string reserved2 = 19;
+}
+
+message PBBCWltWallet
+{
+	string wallet_id = 1;
+	string wallet_ip = 2;
+	string ledger_id = 3;
+	string user_id = 4;
+	string is_creator = 5;
+	string idc = 6;
+	int64 created_time = 7;
+	int64 updated_time = 8;
+	string reserved1 = 9;
+	string reserved2 = 10;
+}
+
