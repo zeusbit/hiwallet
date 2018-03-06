@@ -1,0 +1,254 @@
+syntax = "proto3";
+
+package org.fc.wlt.gens;
+
+import "user.proto";
+import "asset.proto";
+import "transfer.proto";
+
+enum PQRYModule {
+	 QRY = 0;	 
+};
+
+enum PQRYCommand {
+	//查询接口
+	GOA = 0; //发行资产查询
+	GUI = 22; //用户信息查询
+	GUC = 23; //用户认证信息查询
+	GUA = 24; //用户地址查询
+	GAI = 25; //资产信息查询
+	GBS = 26; //资产挂单查询
+	GTM = 27; //挂单撮合查询，生成所有能满足交易目的的单笔或组合交易方案
+	GAT = 28; //资产转移查询
+};
+
+
+
+
+//######组织发行资产查询接口请求
+message PSGetOrgAsset
+{
+	string userCode = 1;//用户代码
+	string orgCode = 2;//组织代码，非空时查询指定组织发行的所有资产
+
+	int64 pageNo = 30;//当前页码，默认1
+	int64 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+}
+//######组织发行资产查询接口响应
+message PRetGetOrgAsset
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+
+	repeated PMFundInfo fund = 3;//金融信息
+
+	int32 pageNo = 30;//当前页码
+	int32 pageSize = 31;//分页内最大行数
+	string requstNo = 79;//接口请求唯一序号
+};
+
+//######用户信息查询接口请求
+message PSGetUserInfo
+{
+	string userCode = 1; //用户ID
+	string userPasswd = 3;//密码
+	
+
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+//######用户信息查询接口响应
+message PRetGetUserInfo
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	repeated PMUserInfo userInfo = 3;//用户信息
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######用户认证信息查询接口请求
+message PSGetUserCertifcation
+{
+	string userCode = 1; //用户代码，不指定查所有
+	string type = 2;//认证类型(1:组织，2:个人)
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+//######用户认证信息查询接口响应
+message PRetGetUserCertifcation
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string type = 3;//认证类型(1:组织，2:个人)
+	//1:组织时：
+	repeated PMOrganizationInfo orgInfo = 4;//组织信息
+	//2:个人时：
+	repeated PMPersonalInfo perInfo = 5;//个人信息
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######用户地址查询接口请求
+message PSGetUserAddress
+{
+	string userCode = 1; //用户代码，不指定查所有
+	string status = 2;//用户地址状态，1未使用，2已使用...
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+//######用户地址查询接口响应
+message PRetGetUserAddress
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	repeated PMUserAddress ua = 7;//用户地址
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######资产信息查询接口请求
+message PSGetAssetFundInfo
+{
+	string userCode = 1; //用户代码
+	string bcTxid = 2;//资产的txid
+	string hexAddr = 3;//资产地址
+	string type = 4;//资产类型，货币、实物、券类、积分、卡类...
+	string alias = 6;//资产别名
+	string dataTable = 7;//资产检索条件
+	string dmtEname = 8;//货币英文名称,如：FBS
+	string dmtCname = 9;//货币中文名称,如：泛融币
+
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产信息查询接口响应
+message PRetGetAssetFundInfo
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMFundInfo fundInfo = 3;//资产信息
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######资产挂单查询接口请求
+message PSGetBuySell
+{
+	string userCode = 1;//用户代码
+	string bsCode =2 ;//挂单代码
+	string status = 3;//挂单状态，1已成交；2挂单中；3撤销...
+	PMFundInfo source = 4; //原资产
+	double sourceAmount = 5;//原有资产的交易数量
+	PMFundInfo target = 6;//目标资产
+	double targetAmount = 7;//目标资产的交易数量
+	string type = 8;//挂单类型，BUY买或SEL卖
+
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产挂单查询接口响应
+message PRetGetBuySell
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	repeated PMTransaction bsInfo = 3;//挂单信息
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+
+//######挂单撮合查询接口请求
+message PSGetBuySellMake
+{
+	string userCode = 1;//用户代码
+	PMFundInfo target = 2;//目标资产
+	double targetAmount = 3;//目标资产的数量
+	string requstNo = 79;//接口请求唯一序号
+};
+//######挂单撮合查询接口响应
+message PRetGetBuySellMake
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMFundInfo target = 3;//目标资产
+	double targetAmount = 4;//目标资产的数量
+	repeated PMPlan plan = 5;//撮合方案(可能会是多个)
+	string requstNo = 79;//接口请求唯一序号
+};
+message PMPlan{
+	string bsmCode = 1;//撮合代码
+	string msg = 2;//描述
+	int32 stepCount = 3;//到达查询的目标资产的总步骤
+	repeated PMBuySellMake bsm = 4;//撮合交易（可能到达最终的目标资产，可能不只是一次交易，如：想要3个FBS，用户有1000个A，挂单交易有：1000个A到5000个B，4800个B到3个FBS。也能是500个A到2个FBS和400个A到1个FBS）
+};
+message PMBuySellMake{//撮合方案
+	int32 step = 1;//当前第几步
+	int32 stepCount = 6;//一共几需步
+	PMAssetInfo bsAsset = 2;//原有资产（这一步骤中用户已经拥有的资产）
+	double sourceAmount = 3;//原有资产所需的交易数量
+	PMFundInfo target = 4;//目标资产（这一步中要交易成的资产）
+	double targetAmount = 5;//目标资产获得的交易数量
+};
+
+
+//######资产转移查询接口请求
+message PSGetAssetTransfer
+{
+	string userCode = 1;//发起的用户代码
+	double targetAmount = 2;//目标资产的数量
+	PMFundInfo target = 3;//目标资产
+	string transferCode =4;//转移代码
+
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产转移查询接口响应
+
+message PRetGetAssetTransfer
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	repeated PMTransfer tfs= 20;//转账信息（）
+	int32 pageNo = 30;//当前页码，默认1
+	int32 pageSize = 31;//分页内最大行数，默认10
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+message PMTransfer{//转账信息
+	string userCode = 1;//发起的用户代码
+	string toUserCode = 2;//接收的用户代码
+	PMFundInfo target = 3;//目标资产
+	double targetAmount = 4;//目标资产的数量
+	PMAssetInfo oldAsset = 5;//转移前资产
+	PMAssetInfo newAsset = 6;//转移后的资产
+	int64 dateTime = 7;//时间戳
+};
+
+
+
+
+
+
+//合约定义
+message PMContract{
+	string opType  = 1;//合约引擎
+	string condition = 2;//执行条件
+	string scripts = 3;//执行内容
+	PMFundInfo fbcCoin = 4;//执行合约需要花费的泛融币
+};
+

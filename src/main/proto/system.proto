@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package org.fc.wlt.gens;
+
+enum PSYSModule {
+	 SYS = 0;	 
+};
+
+enum PSYSCommand {
+	GLG = 0; //生成日志
+	TES = 1;//测试pb
+	CUD = 2;//测试增删改查
+};
+
+message PSGLGSYS {
+	string startDate = 1;
+	string endDate = 2;
+	string logType = 3;
+};
+message PRetGLGSYS {
+	string errorCode = 1;
+	string errorDesc = 2;
+	string logPath = 3;
+};
+
+message PSTestPB {
+	string requestNo = 1;
+};
+
+message PRetTestPB {
+	string errCode = 1;
+	string errMsg = 2;
+};
+
+message PSTestCUD {
+	string requestNo = 1;
+	int32 actionType = 2;//add : 1 delete : 2  update : 3  query : 4
+	string username = 3;
+	string passwd = 4;
+};
+
+message PRetTestCUD {
+	string errCode = 1;
+	string errMsg = 2;
+};
+

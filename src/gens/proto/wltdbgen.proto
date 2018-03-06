@@ -1,0 +1,173 @@
+
+syntax = "proto3";
+
+package org.fc.wlt.ordbgens.wlt.pbo;
+
+message PBWLTAddr
+{
+	string addr_id = 1;
+	string user_id = 2;
+	string hex_addr = 3;
+	string public_key = 4;
+	string public_key_hash = 5;
+	string private_key = 6;
+	string addr_status = 7;
+	int64 created_time = 8;
+	int64 updated_time = 9;
+	string reserved1 = 10;
+	string reserved2 = 11;
+}
+
+message PBWLTAsset
+{
+	string asset_id = 1;
+	string user_id = 2;
+	string fund_id = 3;
+	double hold_count = 4;
+	string bc_txid = 5;
+	string addr_id = 6;
+	string asset_pub_hash = 7;
+	string asset_type = 8;
+	string asset_status = 9;
+	string asset_alias = 10;
+	string asset_keywords = 11;
+	string dmt_ename = 12;
+	string dmt_cname = 13;
+	double dmt_count = 14;
+	string metadata = 15;
+	int64 created_time = 16;
+	int64 updated_time = 17;
+	string reserved1 = 18;
+	string reserved2 = 19;
+}
+
+message PBWLTCertOrg
+{
+	string org_id = 1;
+	string org_code = 2;
+	string org_name = 3;
+	string org_type = 4;
+	string user_id = 5;
+	string corporate_name = 6;
+	string license_code = 7;
+	string license_photo_id = 8;
+	string national = 9;
+	string province = 10;
+	string city = 11;
+	string street = 12;
+	string tel = 13;
+	string fax = 14;
+	string web_record_num = 15;
+	string org_status = 16;
+	int64 created_time = 17;
+	int64 updated_time = 18;
+	string reserved1 = 19;
+	string reserved2 = 20;
+}
+
+message PBWLTCertPer
+{
+	string per_id = 1;
+	string per_code = 2;
+	string user_id = 3;
+	string real_name = 4;
+	string id_card_type = 5;
+	string id_card_code = 6;
+	string id_card_photo_id = 7;
+	string per_status = 8;
+	int64 created_time = 9;
+	int64 updated_timd = 10;
+	string reserved1 = 11;
+	string reserved2 = 12;
+}
+
+message PBWLTFile
+{
+	string file_id = 1;
+	string file_path = 2;
+	string file_name = 3;
+	double file_size = 4;
+	string user_id = 5;
+	string file_hash = 6;
+	int64 created_time = 7;
+	int64 updated_time = 8;
+	string reserved1 = 9;
+	string reserved2 = 10;
+}
+
+message PBWLTFund
+{
+	string fund_id = 1;
+	string user_id = 2;
+	string dmt_cname = 3;
+	string dmt_ename = 4;
+	string genis_addr = 5;
+	string genis_org_id = 6;
+	double genis_deposit = 7;
+	double total_count = 8;
+	double colored_fbc = 9;
+	double exchange_fbc = 10;
+	double turnover_count = 11;
+	int64 date_time = 12;
+	string fund_status = 13;
+	int64 created_time = 14;
+	int64 updated_time = 15;
+	string reserved1 = 16;
+	string reserved2 = 17;
+}
+
+message PBWLTPend
+{
+	string pend_id = 1;
+	string bs_code = 2;
+	string user_id = 3;
+	string source_asset_id = 4;
+	double source_amount = 5;
+	string target_fund_id = 6;
+	double target_amount = 7;
+	string pend_type = 8;
+	string auto_commit = 9;
+	double total_fee = 10;
+	string pend_status = 11;
+	int64 created_time = 12;
+	int64 updated_time = 13;
+	string reserved1 = 14;
+	string reserved2 = 15;
+}
+
+message PBWLTTransfer
+{
+	string transfer_id = 1;
+	string source_user_id = 2;
+	string source_asset_id = 3;
+	double source_amount = 4;
+	string source_fund_id = 5;
+	string target_user_id = 6;
+	string target_asset_id = 7;
+	double target_amount = 8;
+	string target_fund_id = 9;
+	double total_fee = 10;
+	string transfer_type = 11;
+	string pend_id = 12;
+	string transfer_status = 13;
+	int64 created_time = 14;
+	int64 updated_time = 15;
+	string reserved_01 = 16;
+	string reserved_02 = 17;
+}
+
+message PBWLTUser
+{
+	string user_id = 1;
+	string user_code = 2;
+	string user_name = 3;
+	string user_passwd = 4;
+	string check_phone = 5;
+	string check_email = 6;
+	string user_status = 7;
+	int64 created_time = 8;
+	int64 updated_time = 9;
+	string reserved1 = 10;
+	string reserved2 = 11;
+}
+

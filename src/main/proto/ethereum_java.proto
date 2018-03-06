@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package org.fc.bc.wlt.eth;
+
+enum PETHModule {
+	 ETH = 0;	 
+};
+
+enum PETHCommand {
+	
+	TES = 0;//测试eth
+};
+
+//#################	测试以太坊  #######################
+
+message PSTestETHPB {//测试以太坊代码
+	string requestNo = 1;
+};
+
+message PRetTestETHPB {//测试以太坊代码
+	string errCode = 1;
+	string errMsg = 2;
+};
+
+//################# 注册以太坊账户，并返回注册信息  #########
+
+
+//###############根据公钥 获取本账户 所有交易信息 ###########
+
+
+//###########根据提供的公钥，获取账户所有 交易信息 #############
+

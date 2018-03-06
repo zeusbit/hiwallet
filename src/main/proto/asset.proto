@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package org.fc.wlt.gens;
+
+enum PASTModule {
+	 AST = 0;	 
+};
+
+enum PASTCommand {
+	NUA = 0;//新增用户地址
+	ONA = 2; //组织发行资产，组织认证审核通过的用户可发行自己的资产
+};
+
+message PMUserAddress {//用户地址
+	string hexAddr = 1;//用户地址
+	string pki = 2;//私钥
+	string pub = 3;//公钥
+	string pubHash = 4;//公钥匙hash
+	string userCode = 5;//用户代码
+	PMAssetInfo asset = 6;//认证审核通过后，自动创建一个FBS资产（赠送一定数量的FBS）
+	int64 dateTime = 7;//创建时间戳
+	string status = 8;//地址状态
+};
+message PMAssetInfo {//资产信息
+	string bcTxid = 1;//资产的txid
+	string hexAddr = 2;//资产地址
+	string pubHash = 3;//资产公钥匙hash
+	string type = 4;//资产类型，货币、实物、券类、积分、卡类...
+	string status = 5;//资产状态，1自建；2挂单；3冻结；4转出；5转入...
+	string alias = 6;//资产别名
+	string dataTable = 7;//资产检索条件
+	string dmtEname = 8;//英文名称,如：FBS
+	string dmtCname = 9;//中文名称,如：泛融币
+	double dmtCount = 10;//资产持有数量
+	string metadata = 11 [jstype = JS_NORMAL];//扩展信息
+	PMFundInfo fund = 12;//金融信息
+	string userCode = 14;//当前持有者的用户代码
+	int64 dateTime = 15;//创建时间戳
+	string assetId = 16;//唯一编码
+};
+message PMFundInfo{//金融信息
+	string fundId = 1;//唯一编码
+	string dmtEname = 2;//货币英文名称
+	string dmtCname = 3;//货币中文名称
+	string genisAddress = 4;//货币创始地址
+	string genisOrg = 5;//创始机构
+	double genisDeposit = 7;//创始保证金
+	double totalCount = 8;//总发行数量
+	double coloredFbc = 9;//对应的FBC数量
+	double exchangeFbc = 10;//FBC的兑换率
+	double turnoverCount = 11;//流通数量
+	int64 dateTime = 12;//货币发行时间戳
+};
+
+//######新增用户地址接口请求
+message PSNewUserAddress {
+	string userCode = 1;//用户代码
+	string requstNo = 79;//接口请求唯一序号
+};
+//######新增用户地址接口请求
+message PRetNewUserAddress {
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMUserAddress ua = 3;//用户地址
+	double totalFee = 4 ;//手续费，新增用户地址系统所收取的FBS
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######发行资产接口请求
+message PSOrgAssetCreate {
+	string userCode = 1;//用户代码，用户无未使用的用户地址时，需先创建一个新用户地址
+	string type = 4;//资产类型，货币、实物、券类、积分、卡类...
+	string status = 5;//资产状态，1自建；2挂单；3冻结；4转出；5转入...
+	string alias = 6;//资产别名
+	string dataTable = 7;//资产检索条件
+	string dmtEname = 8;//货币英文名称,如：FBS
+	string dmtCname = 9;//货币中文名称,如：泛融币
+	double genisCount = 10;//创始数量
+	double genisDeposit = 11;//创始保证金
+	double coloredFbc = 12;//对应的FBC数量
+	double exchangeFbc = 13;//FBC的兑换率
+	string metadata = 14 [jstype = JS_NORMAL];//扩展信息
+
+	string requstNo = 79;//接口请求唯一序号
+};
+//######发行资产接口响应
+message PRetOrgAssetCreate
+{
+	string errCode = 1;
+	string msg = 2;
+
+	PMAssetInfo assets = 3;
+	double totalFee = 4; //收取手续费
+	string requstNo = 79;//接口请求唯一序号
+};
+
+

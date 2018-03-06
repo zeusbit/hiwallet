@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package org.fc.wlt.gens;
+
+
+import "asset.proto";
+
+enum PUSRModule {
+	 USR = 0;//注册	 
+};
+
+enum PUSRCommand {
+	REG = 0; //用户注册
+	LIN = 1;//用户登录
+	UPD = 2;//用户状态变更
+	CER = 7; //用户认证，发起个人或组织认证
+	CEV = 3; //认证核实,审核通过时创建地址，以及附送资产
+	CUP = 4;//认证状态修改（通过或不通过或审核中）
+	
+};
+
+message PMUserInfo {
+	string userCode = 1;
+	string userId = 2;
+	string checkPhone = 3;
+	string checkEMail = 4;
+	PMOrganizationInfo orgInfo = 5;//组织信息
+	PMPersonalInfo perInfo = 6;//个人信息
+
+	int64 dateTime = 11;//创建时间戳
+};
+
+message PMOrganizationInfo {
+	string orgId = 1;//组织代码
+	string orgName = 2;//组织名称
+	string juridicalName =3;//法人姓名
+	string licenseCode =4;//执照注册号
+	string licensePhotoId =5;//执照照片文件ID(文件上传接口返回)
+	string national = 6; //国家
+	string province = 7; //省份
+	string city = 8; //城市
+	string streets =9; //街道
+	string tel =10;//联系电话
+	string fax =11;//传真
+	string webRecordNumber = 12;//组织网站备案号
+	string orgType = 13;//组织类型（1:企业，2:政府，3:其他）
+	int64 dateTime = 14;//创建时间戳
+	string userCode = 15;//创建用户
+	string status = 16;//状态（1:审核中，2:审核通过，3:审核未通过，4:锁定）
+};
+
+message PMPersonalInfo {
+	string perId = 1;
+	string realName = 2;
+	string idCardCode = 3;
+	string idCardPhotoId = 4;
+	string status = 5;
+	int64 dateTime = 6;
+	string userCode = 7;
+};
+
+message PSUsrReg {
+	string userName = 2;
+	string userPasswd = 3;
+	string checkPhone = 4;
+	string checkEMail = 5;
+	string requestNo = 11;
+	
+};
+
+message PRetUsrReg {
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMUserInfo userInfo = 3;//用户信息
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PSUserLogin {
+	string userName = 1; //用户代码
+	string userPasswd = 2;//密码
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PRetUserLogin {
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMUserInfo userInfo = 3;//用户信息
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PSCertifcation
+{
+	string userCode = 1;//用户代码
+	string type = 2;//认证类型(1:组织，2:个人)
+	//1:组织时：
+	string orgName = 6;//组织名称
+	string juridicalName =7;//法人姓名
+	string licenseCode =8;//执照注册号
+	string licensePhotoId =9;//执照照片文件ID(文件上传接口返回)
+	string national = 10; //国家
+	string province = 11; //省份
+	string city = 12; //城市
+	string streets =13; //街道
+	string tel =14;//联系电话
+	string fax =15;//传真
+	string webRecordNumber = 16;//组织网站备案号
+	string orgType = 17;//组织类型（1:企业，2:政府，3:其他）
+	//2:个人时：
+	string realName = 18;//真实姓名
+	string idCardType = 21;//证件类型
+	string idCardCode = 19;//证件证号
+	string idCardPhotoId = 20;//证件照片文件ID(文件上传接口返回)
+
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PRetCertifcation
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string userCode = 3;//用户代码
+	string type = 6;//认证类型(1:组织，2:个人)
+	//1:组织时：
+	PMOrganizationInfo orgInfo = 4;//组织信息
+	//2:个人时：
+	PMPersonalInfo perInfo = 5;//个人信息
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######认证核实接口请求
+message PSCertifcationVerify
+{
+	string userCode = 1;//用户代码
+	string type = 2;//认证类型(1:组织，2:个人)
+	//string status = 5;//状态（1:审核中，2:审核通过，3:审核未通过，4:锁定）
+	//1:组织时：
+	string orgId = 3;//组织代码
+	//2:个人时：
+	string perId = 4;//个人代码
+	string requstNo = 79;//接口请求唯一序号
+};
+//######认证核实接口响应
+message PRetCertifcationVerify
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string userCode = 3;//用户代码
+	string type = 4;//认证类型(1:组织，2:个人)
+	//1:组织时：
+	string orgId = 5;//组织代码
+	//2:个人时：
+	string perId = 6;//个人代码
+	repeated PMUserAddress uas = 7;//认证审核通过后，自动创建用户地址
+	string status = 8;//认证状态
+	string requstNo = 79;//接口请求唯一序号
+};
+
+//更新审核壮体啊
+message PSCertifcationUpdate
+{
+	string userId = 1;//用户代码
+	string type = 2;//认证类型（1:组织，2:个人）
+	string status = 5;//状态（1:审核中，2:审核通过，3:审核未通过，4:锁定）
+	//1:组织时：
+	string orgId = 3;//组织代码
+	//2:个人时：
+	string perId = 4;//个人代码
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PRetCertifcationUpdate
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+};
+
+

@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package org.fc.wlt.gens;
+
+import "asset.proto";
+
+enum PTRSModule {
+	 TRS = 0;	 
+};
+
+enum PTRSCommand {
+	BSN = 0; //资产挂单创建,预A1->A2,先撮合交易，撮合未果后挂单
+	BSC = 11; //资产挂单撤销,撤销未交易完成的挂单
+	BST = 12; //资产挂单交易，A1->u2,A2->u1，自持有资产不满足交易时先做撮合交易，撮合交易后也不能满足时才失败
+	BSM = 13; //资产挂单撮合，A1->A2转换，成功或失败，不做挂单处理
+	UAT = 14; //资产转移，直接转给另一个用户（u1只需说要传给u2，10个FBS，如果A没有FBS时，尝试撮合交易用持有资产获得到10个FBS后给u2）
+};
+
+//交易中无论转入资产还是新建资产，都需要先提供新的地址，旧地址不再使用，状态为：资产耗尽
+
+
+
+//######资产挂单创建接口请求
+message PSBuySellNew
+{
+	string userCode = 1;//用户代码
+	string type = 2;//挂单类型，BUY买或SEL卖
+	string sourceAssetId = 3; //原持有的资产
+	double sourceAmount = 4;//原资产的交易数量
+	string targetFundId = 5;//目标资产信息
+	double targetAmount = 6;//目标资产的交易数量
+
+	string requstNo = 79;//接口请求唯一序号
+}
+//######资产挂单创建接口响应
+message PRetBuySellNew
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string bsCode =3 ;//挂单代码（原资产的交易数量，被存在这个地址中，系统拥有该资产）
+	PMAssetInfo asset = 4; //原持有的资产变化后的资产
+	double totalFee = 5; //收取手续费
+	string requstNo = 79;//接口请求唯一序号
+};
+
+//######资产挂单撤销接口请求
+message PSBuySellCancel
+{
+	string userCode = 1;//用户代码
+	string bsCode =2 ;//挂单代码
+	string requstNo = 79;//接口请求唯一序号
+}
+//######资产挂单撤销接口响应
+message PRetBuySellCancel
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string status = 3;//挂单状态，1已成交；2挂单中；3撤销...
+	PMAssetInfo oldAsset = 4; //原持有的资产变化前的资产
+	PMAssetInfo newAsset = 5; //原持有的资产变化后的资产
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######资产挂单交易接口请求
+message PSBuySellTransaction
+{
+	string userCode = 1;//用户代码
+	string bsCode =2 ;//挂单代码
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产挂单交易接口响应
+message PRetBuySellTransaction
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	PMAssetInfo sourceAsset = 3; //原持有的资产变化后的资产信息
+	PMAssetInfo targetAsset = 4; //获取到目标资产信息
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######资产挂单撮合接口请求
+message PSBuySellMake
+{
+	string userCode = 1;//用户代码
+	string bsmCode = 2;//撮合代码，撮合查询返回的
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产挂单撮合接口响应
+message PRetBuySellMake
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	repeated PMAssetInfo sourceAsset = 3; //原持有的资产变化后的资产信息
+	PMAssetInfo targetAsset = 4; //使用原持有的资产获取的目标资产及原持有的资产变化后的资产
+	string requstNo = 79;//接口请求唯一序号
+};
+
+
+//######资产转移接口请求
+message PSAssetTransfer
+{
+	string userCode = 1;//发起的用户代码
+	string sourceAddrId = 2;//发起方地址
+	double sourceAmount = 3;//发起方转账金额
+	string targetAddrId = 4;//接收方地址
+	double targetAmount = 5;//目标资产的数量（扣除手续费后）
+	string requstNo = 79;//接口请求唯一序号
+};
+//######资产转移接口响应
+message PRetAssetTransfer
+{
+	string errCode = 1;//返回码
+	string msg = 2; //描述信息
+	string transferCode = 3;//转账代码
+	PMAssetInfo asset = 4; //原持有的资产变化后的资产
+	string requstNo = 79;//接口请求唯一序号
+};
+
+message PMTransaction{//挂单信息
+	string user_code = 1;//用户代码
+	string type = 2;//挂单类型，BUY买或SEL卖
+	//PMFundInfo source = 3; //原资产
+	//double source_amount = 4;//原有资产的交易数量
+	PMAssetInfo bs_asset = 5;//原有资产的交易数量（挂单中的资产信息）
+	PMFundInfo target = 6;//目标资产
+	double target_amount = 7;//目标资产的交易数量
+	int32 status = 8;//挂单状态，1已成交；2挂单中；3撤销...
+	int64 date_time = 9;//时间戳
+	string bs_code = 10;//挂单代码
+};
